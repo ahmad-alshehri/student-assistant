@@ -1,0 +1,64 @@
+import requests
+def get_tip():
+        url = "https://api.adviceslip.com/advice"
+        response = requests.get(url)
+        data = response.json()
+        print("Today's tip: \n")
+        print(data["slip"]["advice"])
+def add_task():
+    task = input("Enter your task: ")
+    with open("tasks.txt","a") as file:
+        file.write(task + "\n")
+    print("Task added successfully!")
+def view_tasks():
+    try:
+        with open("tasks.txt", "r") as file:
+            tasks = file.read()
+            if tasks == "":
+                print("No tasks yet.")
+            else:
+                print("\nYour tasks: \n")
+                for i, task in enumerate(tasks.splitlines(),1):
+                    print(f"{i}. {task}")
+    except FileNotFoundError:
+        print("No tasks yet. Add one!")
+def save_note():
+    note = input("Write your note: ")
+    with open("notes.txt","a") as file:
+        file.write(note + "\n")
+    print("Note saved successfully!")
+def view_notes():
+    try:
+        with open("notes.txt", "r") as file:
+            notes = file.read()
+            if notes == "":
+                print("No notes yet.")
+            else:
+                print("\nYour notes: \n")
+                print(notes)
+    except FileNotFoundError:
+        print("No notes yet.")
+while True:
+    print("\n=== Student Assistant ===\n")
+    print("1. get the daily tip")
+    print("2. add a task")
+    print("3. view tasks")
+    print("4. save a note")
+    print("5. view notes")
+    print("6. Exit")
+    choice = input("Choose an option: ")
+    if choice == "1":
+        get_tip()
+    elif choice == "2":
+        add_task()
+    elif choice == "3":
+        view_tasks()
+    elif choice == "4":
+        save_note()
+    elif choice == "5":
+        view_notes()
+    elif choice == "6":
+        print("Thanks for using the student assistane, goodbye!")
+        break
+    else:
+        print("Invalid choice.")
